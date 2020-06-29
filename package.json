@@ -1,0 +1,17 @@
+{
+  "name": "jauxter",
+  "version": "2.0.0",
+  "description": "Jooxter corporate booking automation made simpler",
+  "main": "autoBook.js",
+  "dependencies": {
+    "cli-color": "^2.0.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node autoBook.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rascafr",
+  "license": "MIT"
+}
