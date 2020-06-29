@@ -1,6 +1,6 @@
 # Jauxter
 
-Jooxter booking automation made simpler.
+Jooxter booking automation made simpler (up to 7 days in the future).
 
 ## Install
 
@@ -26,15 +26,23 @@ module.exports = {
 
 Those fields values can be guessed when running a request on the jooxter app website with the web inspector.
 
+## Booking config
+
+Create the `bookConfig.js` file, or copy and edit the `autoBook.template.js` file.
+
+```js
+module.exports = {
+    title: 'Jauxter booking example',
+    color: '#eb1354',
+    timeFrom: '09:30',
+    timeTo: '20:00',
+    resourceId: 12345,
+    externalInvitedPeople: '',
+    description: ''
+}
+```
+
 ## Run it
-
-Edit the `book.js` file with your booking / search query (check the `reservation` object) where you can set:
-
-- the desk identifier
-- the booking date
-- the booking time range
-
-Then:
 
 ```bash
 npm start
@@ -43,13 +51,10 @@ npm start
 If everything went ok, you should see something like:
 
 ```
-Booking for { dateFrom: '30/06/2020',
-  dateTo: '30/06/2020',
-  timeFrom: '09:30',
-  timeTo: '20:00',
-  userId: xxxxx,
-  resourceId: 12171,
-  invitedPeople: 'xxxxxx@deloitte.fr' }
-reservation { status: 'SUCCESS' }
-booking { data: { bookingId: [ 1234 ] }, status: 'SUCCESS' }
+[Jauxter Started]
+Script will book this desk for the next 7 days (Mon-Fri)...
+[ ✔ ] 02/07/2020
+[ ✔ ] 03/07/2020
+[ ✔ ] 06/07/2020
+[ ✗ ] 07/07/2020 ...
 ```
