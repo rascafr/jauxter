@@ -2,8 +2,9 @@ const Jauxter = require('./lib/jauxter');
 const clc = require('cli-color');
 const success = clc.greenBright;
 const fail = clc.redBright;
-const { USER_ID, USER_EMAIL, USER_HASH } = require('./authParams');
-const BOOK_CONFIG = require('./bookConfig');
+const { USER_ID, USER_EMAIL, USER_HASH } = require('./auth.config');
+const BOOK_CONFIG = require('./book.config');
+const { version } = require('./package.json');
 
 function formatDate(date) {
     const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -16,7 +17,7 @@ function isBusinessDay(date) {
 }
 
 // book for the next days (up to 7)
-console.log('[Jauxter Started]\nScript will book this desk for the next 7 days (Mon-Fri)...');
+console.log(`[Jauxter ${version} Started]\nScript will book this desk for the next 7 days (Mon-Fri)...`);
 (async () => {
     let day = new Date();
     for (let i=0;i<=8;i++) {
@@ -42,4 +43,7 @@ console.log('[Jauxter Started]\nScript will book this desk for the next 7 days (
         day.setDate(day.getDate() + 1)
         day.setHours(0, 0, 0);
     }
+
+    console.log(`[Jauxter ${version} Process] Bye!`);
+    process.exit(0);
 })();
