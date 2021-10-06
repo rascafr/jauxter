@@ -1,5 +1,7 @@
 # Jauxter
 
+🆕  **Uses Kubernetes CronJob!**  🆕 
+
 Jooxter booking automation made simpler (up to 7 days in the future).
 
 ## Install
@@ -11,38 +13,52 @@ cd jauxter
 npm i
 ```
 
-## Authentication config
+## Kubernetes 
 
-Create the `authParams.js` file, or copy and edit the `authParams.template.js` file.
+### YAML configuration
 
-```js
-module.exports = {
-    USER_ID: 1234,
-    USER_EMAIL: 'xxxxx@deloitte.fr',
-    USER_HASH: 'ffff',
-    AUTH_COOKIE: "AWSELB=ABCD; AWSELBCORS=ABCD; name=value; lang=fr; username=ffff; x-api-key=ffff; JSESSIONID=YYYY"
-}
+> This uses `CronJob batch/v1beta1` resource, you might want to check your kubernetes version first if it's not working
+
+Copy the k8s template:
+
+```bash
+cp cronjob.template.yml cronjob.yml
 ```
 
-Those fields values can be guessed when running a request on the jooxter app website with the web inspector.
+Edit the `cronjob.yml` file and set the env variables according to your values:
 
-## Booking config
+**Required:**
 
-Create the `bookConfig.js` file, or copy and edit the `autoBook.template.js` file.
+- `USER_ID`
+- `USER_EMAIL`
+- `USER_HASH`
+- `AUTH_COOKIE`
+- `BOOKING_RESOURCE_ID`
 
-```js
-module.exports = {
-    title: 'Jauxter booking example',
-    color: '#eb1354',
-    timeFrom: '09:30',
-    timeTo: '20:00',
-    resourceId: 12345,
-    externalInvitedPeople: '',
-    description: ''
-}
+> Those fields values can be guessed when running a request on the jooxter app website with the web inspector.
+
+**Optional:**
+
+- `BOOKING_TITLE`
+- `BOOKING_COLOR`
+- `BOOKING_TIME_FROM`
+- `BOOKING_TIME_TO`
+- `BOOKING_EXT_PEOPLE`
+- `BOOKING_DESCRIPTION`
+
+> You can check both `auth.config.js` and `book.config.js` files for value format and examples.
+
+### Deployment
+
+```bash
+kubectl create -f cronjob.yml --kubeconfig=<your kubeconfig file> -n <targeted namespace>
+
+> cronjob.batch/jauxter-cron created
 ```
 
-## Run it
+## Debug / local execution
+
+Set the local environment variables, then:
 
 ```bash
 npm start
