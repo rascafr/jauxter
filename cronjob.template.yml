@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: jauxter-cron
+spec:
+  schedule: "0 6 * * *" # run every day at 6:00 AM
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: jauxter-auto
+            image: your-nexus-repository/jauxter-auto:latest
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: BOOKING_RESOURCE_ID
+                value: "12345"
+              - name: USER_ID
+                value: "1234"
+              - name: USER_EMAIL
+                value: you@email.fr
+              - name: USER_HASH
+                value: 40_characters_hash_here
+              - name: AUTH_COOKIE
+                value: AWSELB=1234ABCD; AWSELBCORS=FEDC1234; name=value; lang=fr; username=40_char_user_hash; x-api-key=ABCD; JSESSIONID=1234
+          restartPolicy: OnFailure
+          imagePullSecrets:
+              - name: regcred
