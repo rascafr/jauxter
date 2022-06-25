@@ -5,7 +5,7 @@
   "main": "autoBook.js",
   "dependencies": {
     "cli-color": "^2.0.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {},
   "scripts": {
